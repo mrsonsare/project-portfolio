@@ -3,38 +3,38 @@
  * DYNAMIC RENDERING & INTERACTION CONTROLLER
  * Consumes portfolioData and dynamically injects all content into the DOM.
  * ZERO personal details, skill tags, or project items are hardcoded in HTML.
+ * Synchronizes with window.AdminManager for live real-time updates.
  * ==============================================================================
  */
 
 (function () {
   'use strict';
 
-  // Ensure data exists
-  var data = window.portfolioData;
-  if (!data) {
-    console.error('CRITICAL: portfolioData is not defined. Ensure portfolio-data.js is loaded.');
-    return;
+  // --- Data Accessor Helper ---
+  function getData() {
+    if (window.AdminManager && typeof window.AdminManager.getData === 'function') {
+      return window.AdminManager.getData();
+    }
+    return window.portfolioData || {};
   }
 
   // --- SVG Icons Helper ---
   function getIconSvg(name) {
     switch (name) {
       case 'github':
-        return '<svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>';
+        return '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>';
       case 'linkedin':
-        return '<svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>';
+        return '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>';
       case 'email':
-        return '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
-      case 'scholar':
-        return '<svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4 3.18v6.82h3v-4.43l5 3.93 12-9.5L12 0z"/></svg>';
+        return '<svg width="20" height="20" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>';
       case 'external':
-        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+        return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
       case 'arrow-right':
-        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+        return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
       case 'check':
-        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
       case 'copy':
-        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
       case 'control':
         return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path><circle cx="12" cy="12" r="4"></circle></svg>';
       case 'perception':
@@ -42,17 +42,17 @@
       case 'chip':
         return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>';
       default:
-        return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle></svg>';
+        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle></svg>';
     }
   }
 
   // --- Document Meta & Title Injection ---
   function injectDocumentMetadata() {
-    var p = data.personalInfo;
+    var p = getData().personalInfo;
     if (!p) return;
 
     // Document title
-    document.title = p.name + ' | ' + p.title;
+    document.title = (p.name || 'Harshal Sonsare') + ' | ' + (p.title || 'Robotics & AI Engineer');
 
     // Set meta tags if found
     var descMeta = document.querySelector('meta[name="description"]');
@@ -85,12 +85,13 @@
       toast.classList.remove('show');
     }, 3200);
   }
+  window.showToastNotice = showToast;
 
   // ============================================================================
   // 1. RENDER HEADER & NAVIGATION
   // ============================================================================
   function renderHeader() {
-    var personalInfo = data.personalInfo;
+    var personalInfo = getData().personalInfo || {};
 
     // Logo Monogram, Name & Link
     var logoLink = document.getElementById('nav-logo-link');
@@ -98,16 +99,10 @@
     var logoName = document.getElementById('nav-logo-name');
     var logoTitle = document.getElementById('nav-logo-title');
 
-    if (logoLink) logoLink.setAttribute('aria-label', personalInfo.name + ' - Home');
+    if (logoLink) logoLink.setAttribute('aria-label', (personalInfo.name || 'Harshal Sonsare') + ' - Home');
     if (logoBadge) logoBadge.textContent = (personalInfo.avatar && personalInfo.avatar.initials) ? personalInfo.avatar.initials : 'HS';
-    if (logoName) logoName.textContent = personalInfo.name;
-    if (logoTitle) logoTitle.textContent = (personalInfo.title.split('&')[0] || 'Robotics').trim();
-
-    // Status beacon in header
-    var statusTextEl = document.getElementById('nav-status-text');
-    if (statusTextEl) {
-      statusTextEl.textContent = personalInfo.statusText || 'SYSTEMS ONLINE';
-    }
+    if (logoName) logoName.textContent = personalInfo.name || 'Harshal Sonsare';
+    if (logoTitle) logoTitle.textContent = (personalInfo.title ? personalInfo.title.split('&')[0] : 'Robotics').trim();
 
     // Header scroll background transition
     var header = document.querySelector('.site-header');
@@ -123,17 +118,17 @@
     var mobileBtn = document.getElementById('mobile-toggle-btn');
     var navMenu = document.getElementById('nav-menu');
     if (mobileBtn && navMenu) {
-      mobileBtn.addEventListener('click', function () {
+      mobileBtn.onclick = function () {
         var isOpen = navMenu.classList.toggle('open');
         mobileBtn.setAttribute('aria-expanded', isOpen);
-      });
+      };
 
       // Close menu on navigation link click
       navMenu.querySelectorAll('.nav-link').forEach(function (link) {
-        link.addEventListener('click', function () {
+        link.onclick = function () {
           navMenu.classList.remove('open');
           mobileBtn.setAttribute('aria-expanded', 'false');
-        });
+        };
       });
     }
   }
@@ -142,7 +137,7 @@
   // 2. RENDER HERO SECTION
   // ============================================================================
   function renderHero() {
-    var personalInfo = data.personalInfo;
+    var personalInfo = getData().personalInfo || {};
 
     // Badges / Pills
     var badgeEl = document.getElementById('hero-badge-text');
@@ -154,19 +149,19 @@
     // Name & Highlight
     var titleEl = document.getElementById('hero-name-target');
     if (titleEl) {
-      titleEl.innerHTML = '<span class="name-highlight">' + personalInfo.name + '</span>';
+      titleEl.innerHTML = '<span class="name-highlight">' + (personalInfo.name || 'Harshal Sonsare') + '</span>';
     }
 
     // Role Subtitle
     var roleEl = document.getElementById('hero-role-target');
     if (roleEl) {
-      roleEl.innerHTML = '<span class="hero-role-accent">' + personalInfo.title + '</span>';
+      roleEl.innerHTML = '<span class="hero-role-accent">' + (personalInfo.title || 'Robotics & AI Engineer') + '</span>';
     }
 
     // Description / Tagline
     var descEl = document.getElementById('hero-desc-target');
     if (descEl) {
-      descEl.textContent = personalInfo.tagline;
+      descEl.textContent = personalInfo.tagline || '';
     }
 
     // Social Links in Hero
@@ -180,43 +175,19 @@
         })
         .join('');
     }
-
-    // Telemetry Stats Grid
-    var telemetryContainer = document.getElementById('telemetry-stats-target');
-    if (telemetryContainer && personalInfo.telemetryStats) {
-      telemetryContainer.innerHTML = personalInfo.telemetryStats
-        .map(function (stat) {
-          return '<div class="telemetry-item">' +
-            '<div class="telemetry-val">' + stat.value + '</div>' +
-            '<div class="telemetry-lbl">' + stat.label + '</div>' +
-            '<div class="telemetry-meta">' + stat.meta + '</div>' +
-            '</div>';
-        })
-        .join('');
-    }
-
-    // HUD Footer Info
-    var hudArch = document.getElementById('hud-arch-target');
-    if (hudArch && personalInfo.architectureStack) {
-      hudArch.textContent = personalInfo.architectureStack;
-    }
-
-    var hudClock = document.getElementById('hud-clock-target');
-    if (hudClock && personalInfo.systemClock) {
-      hudClock.textContent = personalInfo.systemClock;
-    }
   }
 
   // ============================================================================
   // 3. RENDER ABOUT SECTION & PHILOSOPHY PILLARS
   // ============================================================================
   function renderAbout() {
-    var personalInfo = data.personalInfo;
+    var data = getData();
+    var personalInfo = data.personalInfo || {};
     var pillars = data.philosophyPillars || [];
 
     var bioTarget = document.getElementById('about-bio-target');
     if (bioTarget) {
-      bioTarget.textContent = personalInfo.shortBio;
+      bioTarget.textContent = personalInfo.shortBio || '';
     }
 
     var pillarsTarget = document.getElementById('about-pillars-target');
@@ -234,12 +205,12 @@
   }
 
   // ============================================================================
-  // 4. RENDER SKILL MATRIX SECTION
+  // 4. RENDER SKILLS SECTION
   // ============================================================================
   var activeSkillCategory = 'all';
 
   function renderSkills() {
-    var skills = data.skills;
+    var skills = getData().skills || {};
     var filterTabsContainer = document.getElementById('skill-tabs-target');
     var skillsGridContainer = document.getElementById('skills-grid-target');
 
@@ -247,7 +218,7 @@
 
     // 1. Render Filter Tabs
     if (filterTabsContainer) {
-      var tabs = [{ id: 'all', name: 'All Competencies' }].concat(
+      var tabs = [{ id: 'all', name: 'All Skills' }].concat(
         skills.categories.map(function (c) {
           return { id: c.id, name: c.name };
         })
@@ -262,30 +233,32 @@
         .join('');
 
       filterTabsContainer.querySelectorAll('.skill-tab-btn').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
+        btn.onclick = function (e) {
           activeSkillCategory = e.currentTarget.getAttribute('data-cat');
           filterTabsContainer.querySelectorAll('.skill-tab-btn').forEach(function (b) {
             b.classList.remove('active');
           });
           e.currentTarget.classList.add('active');
           renderSkillCards();
-        });
+        };
       });
     }
 
     // 2. Render Cards Helper
     function renderSkillCards() {
       if (!skillsGridContainer) return;
+      var currentSkills = getData().skills || {};
+      var categories = currentSkills.categories || [];
 
       var filtered = activeSkillCategory === 'all'
-        ? skills.categories
-        : skills.categories.filter(function (c) {
+        ? categories
+        : categories.filter(function (c) {
             return c.id === activeSkillCategory;
           });
 
       skillsGridContainer.innerHTML = filtered
         .map(function (cat) {
-          var itemsHtml = cat.items
+          var itemsHtml = (cat.items || [])
             .map(function (item) {
               var prof = item.proficiency || 85;
               return '<div class="skill-item">' +
@@ -307,7 +280,7 @@
             '<h3 class="skill-cat-title">' + cat.name + '</h3>' +
             '</div>' +
             '</div>' +
-            '<p class="skill-cat-desc">' + cat.description + '</p>' +
+            '<p class="skill-cat-desc">' + (cat.description || '') + '</p>' +
             '<div class="skill-items-list">' +
             itemsHtml +
             '</div>' +
@@ -319,13 +292,30 @@
     renderSkillCards();
   }
 
+  // --- Project Media Helpers ---
+  function getYouTubeId(url) {
+    if (!url) return null;
+    var match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/i);
+    return match ? match[1] : null;
+  }
+
+  function getProjectMedia(proj) {
+    var media = proj.media || {};
+    var placeholder = proj.mediaPlaceholder || {};
+    var url = media.url || proj.mediaUrl || proj.imageUrl || placeholder.url || '';
+    var type = media.type || placeholder.type || (url ? 'image' : 'blueprint');
+    var badge = media.badge || placeholder.badge || '';
+    var accentColor = media.accentColor || placeholder.accentColor || '#00F0FF';
+    return { type: type, url: url, badge: badge, accentColor: accentColor };
+  }
+
   // ============================================================================
   // 5. RENDER PROJECTS SECTION & MODAL
   // ============================================================================
   var activeProjectCategory = 'all';
 
   function renderProjects() {
-    var projects = data.projects;
+    var projects = getData().projects || [];
     var filterContainer = document.getElementById('project-filters-target');
     var projectsGrid = document.getElementById('projects-grid-target');
 
@@ -337,11 +327,12 @@
         '<div class="projects-empty">' +
         '<div class="projects-empty-icon">📂</div>' +
         '<h3>No Projects Registered In Config</h3>' +
-        '<p>Add project entries to the <code>portfolioData.projects</code> array inside <code>js/portfolio-data.js</code> to dynamically populate this showcase.</p>' +
+        '<p>Add project entries using the Admin Console on the hero section to dynamically populate this portfolio.</p>' +
         '</div>';
       if (filterContainer) filterContainer.style.display = 'none';
       return;
     }
+    if (filterContainer) filterContainer.style.display = 'flex';
 
     // Extract unique categories
     var catSet = {};
@@ -370,28 +361,30 @@
         .join('');
 
       filterContainer.querySelectorAll('.proj-filter-btn').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
+        btn.onclick = function (e) {
           activeProjectCategory = e.currentTarget.getAttribute('data-cat');
           filterContainer.querySelectorAll('.proj-filter-btn').forEach(function (b) {
             b.classList.remove('active');
           });
           e.currentTarget.classList.add('active');
           renderCards();
-        });
+        };
       });
     }
 
     // Render Cards Helper
     function renderCards() {
+      var currentProjects = getData().projects || [];
       var filtered = activeProjectCategory === 'all'
-        ? projects
-        : projects.filter(function (p) {
+        ? currentProjects
+        : currentProjects.filter(function (p) {
             return p.category === activeProjectCategory;
           });
 
       projectsGrid.innerHTML = filtered
         .map(function (proj) {
-          var badgeText = (proj.mediaPlaceholder && proj.mediaPlaceholder.badge) ? proj.mediaPlaceholder.badge : 'SYSTEMS ARCHITECTURE';
+          var media = getProjectMedia(proj);
+          var badgeText = media.badge || (proj.category ? proj.category.toUpperCase() : 'SYSTEM ARCHITECTURE');
           var techStack = proj.techStack || [];
           var visibleTech = techStack.slice(0, 4);
           var overflowCount = techStack.length > 4 ? techStack.length - 4 : 0;
@@ -414,10 +407,24 @@
             ? '<a href="' + proj.liveDemo + '" target="_blank" rel="noopener noreferrer" class="proj-link-icon" title="Live Video / Demo" aria-label="Live Demonstration">' + getIconSvg('external') + '</a>'
             : '';
 
+          var mediaHtml = '';
+          if (media.url) {
+            var ytId = getYouTubeId(media.url);
+            var thumbUrl = ytId ? ('https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg') : media.url;
+            mediaHtml = '<img src="' + thumbUrl + '" alt="' + proj.title + '" class="project-media-img" loading="lazy" onerror="this.style.display=\'none\'">' +
+              '<div class="project-media-overlay"></div>' +
+              (ytId ? '<span class="project-play-icon" aria-hidden="true">▶</span>' : '');
+          }
+
+          var badgeHtml = badgeText
+            ? '<div class="project-blueprint-badge" style="z-index: 3;">' + badgeText + '</div>'
+            : '';
+
           return '<article class="project-card" data-id="' + proj.id + '">' +
             '<div class="project-media-wrap">' +
+            mediaHtml +
             '<span class="project-category-tag">' + (proj.category || 'PROJECT') + '</span>' +
-            '<div class="project-blueprint-badge">' + badgeText + '</div>' +
+            badgeHtml +
             '</div>' +
             '<div class="project-card-body">' +
             '<h3 class="project-card-title">' + proj.title + '</h3>' +
@@ -437,10 +444,10 @@
 
       // Wire detail buttons
       projectsGrid.querySelectorAll('.btn-project-detail').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
+        btn.onclick = function (e) {
           var id = e.currentTarget.getAttribute('data-proj-id');
           openProjectModal(id);
-        });
+        };
       });
     }
 
@@ -452,7 +459,8 @@
   var modalCloseBtn = document.getElementById('modal-close-btn');
 
   function openProjectModal(id) {
-    var project = data.projects.find(function (p) {
+    var projects = getData().projects || [];
+    var project = projects.find(function (p) {
       return p.id === id;
     });
     if (!project || !modalOverlay) return;
@@ -463,8 +471,40 @@
     var titleEl = document.getElementById('modal-title-target');
     if (titleEl) titleEl.textContent = project.title;
 
+    // Render Modal Visual Media
+    var mediaContainer = document.getElementById('modal-media-target');
+    if (mediaContainer) {
+      var media = getProjectMedia(project);
+      if (media.url) {
+        var ytId = getYouTubeId(media.url);
+        if (ytId) {
+          mediaContainer.innerHTML =
+            '<div class="modal-video-wrap">' +
+            '<iframe src="https://www.youtube-nocookie.com/embed/' + ytId + '?autoplay=0" title="' + project.title + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+            '</div>';
+          mediaContainer.style.display = 'block';
+        } else if (media.type === 'video' || media.url.match(/\.(mp4|webm|ogg)$/i)) {
+          mediaContainer.innerHTML =
+            '<div class="modal-video-wrap">' +
+            '<video src="' + media.url + '" controls playsinline class="modal-media-video"></video>' +
+            '</div>';
+          mediaContainer.style.display = 'block';
+        } else {
+          mediaContainer.innerHTML =
+            '<div class="modal-img-wrap">' +
+            '<img src="' + media.url + '" alt="' + project.title + '" class="modal-media-img">' +
+            (media.badge ? '<span class="modal-media-badge">' + media.badge + '</span>' : '') +
+            '</div>';
+          mediaContainer.style.display = 'block';
+        }
+      } else {
+        mediaContainer.innerHTML = '';
+        mediaContainer.style.display = 'none';
+      }
+    }
+
     var descEl = document.getElementById('modal-desc-target');
-    if (descEl) descEl.textContent = project.description;
+    if (descEl) descEl.textContent = project.description || '';
 
     // Highlights
     var highlightsContainer = document.getElementById('modal-highlights-target');
@@ -507,16 +547,18 @@
     if (!modalOverlay) return;
     modalOverlay.classList.remove('active');
     document.body.style.overflow = '';
+    var mediaContainer = document.getElementById('modal-media-target');
+    if (mediaContainer) mediaContainer.innerHTML = '';
   }
 
   if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', closeProjectModal);
+    modalCloseBtn.onclick = closeProjectModal;
   }
 
   if (modalOverlay) {
-    modalOverlay.addEventListener('click', function (e) {
+    modalOverlay.onclick = function (e) {
       if (e.target === modalOverlay) closeProjectModal();
-    });
+    };
   }
 
   window.addEventListener('keydown', function (e) {
@@ -529,8 +571,9 @@
   // 6. RENDER EXPERIENCE & TIMELINE
   // ============================================================================
   function renderTimeline() {
-    var experience = data.experience;
-    var education = data.education;
+    var data = getData();
+    var experience = data.experience || [];
+    var education = data.education || [];
     var expContainer = document.getElementById('experience-timeline-target');
     var eduContainer = document.getElementById('education-timeline-target');
 
@@ -608,8 +651,8 @@
   // 7. RENDER CONTACT & MESSAGE FORM
   // ============================================================================
   function renderContact() {
-    var contact = data.contact;
-    if (!contact) return;
+    var data = getData();
+    var contact = data.contact || {};
 
     // Contact Card Info
     var headingEl = document.getElementById('contact-heading-target');
@@ -618,20 +661,25 @@
     var locEl = document.getElementById('contact-location-target');
     var tzEl = document.getElementById('contact-timezone-target');
 
-    if (headingEl) headingEl.textContent = contact.heading;
-    if (subheadEl) subheadEl.textContent = contact.subheading;
-    if (emailEl) emailEl.textContent = contact.email;
-    if (locEl) locEl.textContent = contact.location;
-    if (tzEl) tzEl.textContent = contact.timeZone;
+    if (headingEl) headingEl.textContent = contact.heading || 'Get In Touch';
+    if (subheadEl) subheadEl.textContent = contact.subheading || '';
+    if (emailEl) emailEl.textContent = contact.email || 'harshalsonsare@example.com';
+    if (locEl) locEl.textContent = contact.location || 'India';
+    if (tzEl) tzEl.textContent = contact.timeZone || 'IST (UTC +5:30)';
 
     // Direct Socials in Contact Card
     var socialsList = document.getElementById('contact-socials-target');
     if (socialsList && contact.directSocials) {
       socialsList.innerHTML = contact.directSocials
         .map(function (s) {
-          return '<a href="' + s.url + '" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="width: 100%; justify-content: flex-start;">' +
-            getIconSvg('external') +
-            '<span>' + s.name + ' - ' + s.label + '</span>' +
+          var iconName = s.name.toLowerCase().indexOf('linkedin') !== -1 ? 'linkedin' : (s.name.toLowerCase().indexOf('github') !== -1 ? 'github' : 'external');
+          return '<a href="' + s.url + '" target="_blank" rel="noopener noreferrer" class="contact-social-btn" aria-label="' + s.name + ': ' + s.label + '">' +
+            '<span class="contact-social-icon">' + getIconSvg(iconName) + '</span>' +
+            '<div class="contact-social-text">' +
+              '<span class="contact-social-name">' + s.name + '</span>' +
+              '<span class="contact-social-label">' + s.label + '</span>' +
+            '</div>' +
+            '<span class="contact-social-arrow">' + getIconSvg('external') + '</span>' +
             '</a>';
         })
         .join('');
@@ -640,17 +688,18 @@
     // Copy Email to Clipboard
     var copyBtn = document.getElementById('copy-email-btn');
     if (copyBtn) {
-      copyBtn.addEventListener('click', function () {
+      copyBtn.onclick = function () {
+        var email = (contact && contact.email) ? contact.email : 'harshal.sonsare@example.com';
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(contact.email).then(function () {
+          navigator.clipboard.writeText(email).then(function () {
             showToast('Email address copied to clipboard');
           }).catch(function () {
-            fallbackCopy(contact.email);
+            fallbackCopy(email);
           });
         } else {
-          fallbackCopy(contact.email);
+          fallbackCopy(email);
         }
-      });
+      };
     }
 
     function fallbackCopy(text) {
@@ -668,7 +717,7 @@
     var feedbackEl = document.getElementById('form-feedback');
 
     if (contactForm) {
-      contactForm.addEventListener('submit', function (e) {
+      contactForm.onsubmit = function (e) {
         e.preventDefault();
 
         var nameInput = document.getElementById('form-name');
@@ -692,7 +741,7 @@
         function handleSuccess() {
           if (feedbackEl) {
             feedbackEl.className = 'form-feedback success';
-            feedbackEl.textContent = 'Transmission received. Reviewing telemetry shortly.';
+            feedbackEl.textContent = 'Transmission received. Reviewing your message shortly.';
           }
           contactForm.reset();
           showToast('Message transmitted successfully');
@@ -715,14 +764,14 @@
             .catch(function () {
               if (feedbackEl) {
                 feedbackEl.className = 'form-feedback error';
-                feedbackEl.textContent = 'Transmission failed. Direct email: ' + contact.email;
+                feedbackEl.textContent = 'Transmission failed. Direct email: ' + (contact.email || '');
               }
             });
         } else {
           // Simulated telemetry transmission
           handleSuccess();
         }
-      });
+      };
     }
   }
 
@@ -730,19 +779,19 @@
   // 8. RENDER FOOTER & UTILITY CONTROLS
   // ============================================================================
   function renderFooter() {
-    var personalInfo = data.personalInfo;
+    var personalInfo = getData().personalInfo || {};
     var yearEl = document.getElementById('footer-year-target');
     var nameEl = document.getElementById('footer-name-target');
 
     if (yearEl) yearEl.textContent = new Date().getFullYear();
-    if (nameEl) nameEl.textContent = personalInfo.name;
+    if (nameEl) nameEl.textContent = personalInfo.name || 'Harshal Sonsare';
 
     // Back to top
     var backToTopBtn = document.getElementById('back-to-top-btn');
     if (backToTopBtn) {
-      backToTopBtn.addEventListener('click', function () {
+      backToTopBtn.onclick = function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+      };
     }
 
     // Active Section Spy
@@ -768,8 +817,8 @@
     });
   }
 
-  // Initialize all sections on DOM load
-  document.addEventListener('DOMContentLoaded', function () {
+  // Comprehensive UI Re-render function exposed globally for Admin
+  function refreshPortfolioUI() {
     injectDocumentMetadata();
     renderHeader();
     renderHero();
@@ -779,5 +828,11 @@
     renderTimeline();
     renderContact();
     renderFooter();
+  }
+  window.refreshPortfolioUI = refreshPortfolioUI;
+
+  // Initialize all sections on DOM load
+  document.addEventListener('DOMContentLoaded', function () {
+    refreshPortfolioUI();
   });
 })();

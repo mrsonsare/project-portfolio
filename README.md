@@ -14,6 +14,19 @@ Editing `portfolio-data.js` automatically populates the entire user interface wi
 
 ---
 
+## ⚡ Direct Hero Admin Console
+
+You can also add, edit, and delete projects, skills, and links directly inside the web browser without opening code files:
+1. Click the **`⚙ Admin Console`** button in the `#hero` section.
+2. Enter the passcode: `admin123` (or `admin`).
+3. Manage items in real time across the dedicated tabs:
+   - **Projects**: Add new projects, edit existing ones, or delete items.
+   - **Skills**: Add or modify skills with level badges and interactive proficiency sliders.
+   - **Links & Bio**: Update full name, title, bio, email, GitHub, and LinkedIn links.
+   - **Export Config**: Download or copy your updated `portfolio-data.js` file with 1 click to save to your repository.
+
+---
+
 ## 🛠️ Configuration Guide (`js/portfolio-data.js`)
 
 Open `js/portfolio-data.js` in any text editor to customize:
@@ -21,8 +34,7 @@ Open `js/portfolio-data.js` in any text editor to customize:
 ### 1. Personal Information & Telemetry (`personalInfo`)
 - **Name, Title, Tagline, & Short Bio**: Engineering introduction and background narrative.
 - **Status Beacon**: `statusText` and `statusState` ('online' | 'busy' | 'away').
-- **Social & Professional Profiles**: GitHub, LinkedIn, Email, Google Scholar.
-- **HUD Metrics**: Real-time stats displayed on the hero card (e.g., ROS 2 nodes deployed, control loop latency, simulation hours).
+- **Social & Professional Profiles**: GitHub, LinkedIn, Email.
 
 ### 2. Technical Skill Matrix (`skills`)
 - Categorized into:

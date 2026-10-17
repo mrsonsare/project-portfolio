@@ -36,20 +36,14 @@
         </div>
       </a>
 
-      <!-- Telemetry Status Beacon -->
-      <div class="status-beacon" role="status" aria-live="polite">
-        <span class="beacon-dot"></span>
-        <span id="nav-status-text">INITIALIZING</span>
-      </div>
-
       <!-- Navigation Links -->
       <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main Navigation">
-        <a href="#hero" class="nav-link active">Telemetry</a>
+        <a href="#hero" class="nav-link active">Home</a>
         <a href="#about" class="nav-link">Overview</a>
-        <a href="#skills" class="nav-link">Competencies</a>
-        <a href="#projects" class="nav-link">Showcase</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
         <a href="#experience" class="nav-link">Timeline</a>
-        <a href="#contact" class="nav-link">Comm Link</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </nav>
 
       <!-- Nav CTA & Mobile Menu Toggle -->
@@ -73,7 +67,7 @@
 
     <!-- 1. HERO SECTION -->
     <section id="hero" aria-labelledby="hero-name-target">
-      <div class="container hero-grid">
+      <div class="container hero-container">
         <div class="hero-content">
           <div class="hero-badge-wrap">
             <span class="hero-pill" id="hero-badge-text">INITIALIZING</span>
@@ -100,38 +94,14 @@
             <a href="#contact" class="btn btn-secondary">
               <span>Initialize Contact</span>
             </a>
+            <button type="button" id="admin-trigger-btn" class="btn btn-ghost btn-admin-trigger" title="Admin Control Suite" aria-label="Open Admin Control Suite">
+              <span>⚙ Admin Console</span>
+            </button>
           </div>
 
           <!-- Hero Social Icons -->
           <div class="hero-socials" id="hero-socials-target" aria-label="Social and professional links">
             <!-- Dynamically populated from portfolioData -->
-          </div>
-        </div>
-
-        <!-- Hero HUD / Telemetry Card -->
-        <div class="hero-hud-card" role="region" aria-label="Real-time Engineering Telemetry">
-          <div class="hud-header">
-            <div class="hud-title">
-              <span class="hud-title-dot"></span>
-              <span>ENGINEERING HUD // TELEMETRY</span>
-            </div>
-            <span class="hud-status-badge">ACTIVE</span>
-          </div>
-
-          <div class="telemetry-grid" id="telemetry-stats-target">
-            <!-- Dynamically populated from portfolioData -->
-          </div>
-
-          <!-- Telemetry Waveform -->
-          <div class="hud-diagram">
-            <div class="hud-diagram-info">
-              <span class="hud-diagram-label">PRIMARY ARCHITECTURE</span>
-              <span class="hud-diagram-val" id="hud-arch-target">Loading...</span>
-            </div>
-            <div class="hud-diagram-info" style="text-align: right;">
-              <span class="hud-diagram-label">SYSTEM CLOCK</span>
-              <span class="hud-diagram-val" id="hud-clock-target">Loading...</span>
-            </div>
           </div>
         </div>
       </div>
@@ -162,8 +132,8 @@
     <section id="skills" aria-labelledby="skills-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Core Competencies</span>
-          <h2 id="skills-title" class="section-title">Technical Skill Matrix</h2>
+          <span class="section-tag">Skills</span>
+          <h2 id="skills-title" class="section-title">Technical Skills</h2>
           <p class="section-subtitle">Categorized proficiency across robotics middleware, machine learning, and embedded hardware.</p>
         </div>
 
@@ -179,11 +149,11 @@
       </div>
     </section>
 
-    <!-- 4. PROJECT SHOWCASE -->
+    <!-- 4. PROJECTS SECTION -->
     <section id="projects" aria-labelledby="projects-title">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Engineering Artifacts</span>
+          <span class="section-tag">Projects</span>
           <h2 id="projects-title" class="section-title">Featured Projects</h2>
           <p class="section-subtitle">Production-grade robotics stacks, embodied AI models, and real-time control algorithms.</p>
         </div>
@@ -230,8 +200,8 @@
     <section id="contact" aria-labelledby="contact-heading-target">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Encrypted Telemetry</span>
-          <h2 class="section-title">Connect & Collaborate</h2>
+          <span class="section-tag">Contact</span>
+          <h2 class="section-title">Get In Touch</h2>
           <p class="section-subtitle">Initiate contact for robotics engineering roles, technical advisory, or embodied AI ventures.</p>
         </div>
 
@@ -277,7 +247,7 @@
             </div>
 
             <!-- Direct Social Links -->
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;" id="contact-socials-target">
+            <div class="contact-socials-list" id="contact-socials-target">
               <!-- Dynamically populated from portfolioData -->
             </div>
           </div>
@@ -306,7 +276,7 @@
               </div>
 
               <div class="form-group">
-                <label for="form-message" class="form-label">Telemetry Message *</label>
+                <label for="form-message" class="form-label">Message *</label>
                 <textarea id="form-message" name="message" class="form-textarea" placeholder="Detail your project specifications, autonomous requirements, or collaboration scope..." required></textarea>
               </div>
 
@@ -341,6 +311,7 @@
       </div>
 
       <div class="modal-body">
+        <div id="modal-media-target" class="modal-media-wrap" style="display: none;"></div>
         <h3 class="modal-desc-heading">Technical Overview</h3>
         <p class="modal-description" id="modal-desc-target"></p>
 
@@ -370,7 +341,7 @@
       </div>
 
       <div class="footer-telemetry">
-        <span>STATUS: 200 OK • DDS NODE: ONLINE</span>
+        <span>SYSTEMS OPERATIONAL • ROS 2 // EMBODIED AI</span>
       </div>
 
       <button type="button" id="back-to-top-btn" class="back-to-top" aria-label="Back to top" title="Scroll back to top">
@@ -382,10 +353,321 @@
   </footer>
 
   <!-- ============================================================================
-       SCRIPTS (Loaded in strict order: Data Config -> Background Canvas -> App Logic)
+       ADMIN CONTROL SUITE MODAL
+       ============================================================================ -->
+  <div id="admin-modal" class="modal-overlay admin-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="admin-dialog-title" aria-hidden="true">
+    <div class="modal-card admin-modal-card">
+      
+      <!-- 1. Passcode Authentication Gate -->
+      <div id="admin-login-box" class="admin-auth-card">
+        <div class="admin-auth-header">
+          <div class="logo-badge" style="margin: 0 auto 1rem; width: 44px; height: 44px;">⚙</div>
+          <h2 id="admin-dialog-title" class="admin-auth-title">Admin Authentication</h2>
+          <p class="admin-auth-sub">Enter security passcode to add, delete, and modify portfolio projects, skills, and links.</p>
+        </div>
+
+        <div id="admin-login-error" class="form-feedback error" style="margin-bottom: 1.25rem;"></div>
+
+        <form id="admin-login-form">
+          <div class="form-group">
+            <label for="admin-passcode-input" class="form-label">Passcode</label>
+            <input type="password" id="admin-passcode-input" class="form-input" placeholder="Enter admin passcode (default: admin123)" required autocomplete="current-password">
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Unlock Console</button>
+            <button type="button" id="admin-modal-close-btn" class="btn btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 2. Admin Dashboard Suite -->
+      <div id="admin-dashboard-box" style="display: none;">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-category">SYSTEM ADMINISTRATOR</div>
+            <h2 class="modal-title" style="font-size: 1.4rem;">Portfolio Management Console</h2>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <button type="button" id="admin-logout-btn" class="btn-admin-action" title="Lock admin session">🔒 Lock</button>
+            <button type="button" onclick="window.AdminManager.close()" class="modal-close-btn" aria-label="Close admin modal">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="admin-tab-bar">
+          <button type="button" class="admin-tab-btn active" data-tab="projects">📁 Projects</button>
+          <button type="button" class="admin-tab-btn" data-tab="skills">⚡ Skills</button>
+          <button type="button" class="admin-tab-btn" data-tab="links">🔗 Links & Bio</button>
+          <button type="button" class="admin-tab-btn" data-tab="export">💾 Export Config</button>
+        </div>
+
+        <div class="modal-body admin-modal-body">
+          <!-- Panel 1: Projects -->
+          <div class="admin-tab-panel" data-panel="projects">
+            <div class="admin-panel-top">
+              <div>
+                <h3 style="font-size: 1.15rem; color: #fff;">Manage Projects</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Add, modify specs, tech stacks, or delete projects.</p>
+              </div>
+              <button type="button" id="admin-add-project-btn" class="btn btn-primary btn-sm">+ Add New Project</button>
+            </div>
+            <div id="admin-projects-list" class="admin-items-grid"></div>
+          </div>
+
+          <!-- Panel 2: Skills -->
+          <div class="admin-tab-panel" data-panel="skills" style="display: none;">
+            <div class="admin-panel-top">
+              <div>
+                <h3 style="font-size: 1.15rem; color: #fff;">Manage Skills Matrix</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Add, edit, or delete skill matrices and fine-tune proficiency levels.</p>
+              </div>
+              <button type="button" id="admin-add-category-btn" class="btn btn-primary btn-sm">+ Add Skill Matrix</button>
+            </div>
+            <div id="admin-skills-list"></div>
+          </div>
+
+          <!-- Panel 3: Links & Info -->
+          <div class="admin-tab-panel" data-panel="links" style="display: none;">
+            <div class="admin-panel-top">
+              <div>
+                <h3 style="font-size: 1.15rem; color: #fff;">Edit Personal Information & Profile Links</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Update headline, bio narrative, and social media URLs.</p>
+              </div>
+            </div>
+            <div class="admin-form-grid">
+              <div class="form-group">
+                <label for="admin-edit-name" class="form-label">Full Name</label>
+                <input type="text" id="admin-edit-name" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="admin-edit-title" class="form-label">Professional Role / Title</label>
+                <input type="text" id="admin-edit-title" class="form-input">
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="admin-edit-tagline" class="form-label">Hero Headline / Tagline</label>
+                <input type="text" id="admin-edit-tagline" class="form-input">
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="admin-edit-bio" class="form-label">Short Bio (Overview Section)</label>
+                <textarea id="admin-edit-bio" class="form-textarea" style="min-height: 90px;"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="admin-edit-location" class="form-label">Operating Location</label>
+                <input type="text" id="admin-edit-location" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="admin-edit-email" class="form-label">Direct Contact Email</label>
+                <input type="email" id="admin-edit-email" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="admin-edit-github" class="form-label">GitHub Profile URL</label>
+                <input type="url" id="admin-edit-github" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="admin-edit-linkedin" class="form-label">LinkedIn Profile URL</label>
+                <input type="url" id="admin-edit-linkedin" class="form-input">
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+              <button type="button" id="admin-save-links-btn" class="btn btn-primary">Save Profile & Links</button>
+            </div>
+          </div>
+
+          <!-- Panel 4: Export Config -->
+          <div class="admin-tab-panel" data-panel="export" style="display: none;">
+            <div class="admin-panel-top">
+              <div>
+                <h3 style="font-size: 1.15rem; color: #fff;">Export & Synchronize Configuration</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Download or copy your customized portfolio-data.js to commit directly to GitHub.</p>
+              </div>
+            </div>
+            <pre id="admin-export-preview" class="admin-code-preview"></pre>
+            <div class="admin-export-actions">
+              <button type="button" id="admin-download-btn" class="btn btn-primary">⬇️ Download portfolio-data.js</button>
+              <button type="button" id="admin-copy-config-btn" class="btn btn-secondary">📋 Copy Configuration</button>
+              <button type="button" id="admin-reset-default-btn" class="btn btn-ghost" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3);">⚠️ Reset to Defaults</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Add/Edit Sub-Modal -->
+  <div id="admin-project-form-modal" class="modal-overlay sub-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 id="proj-form-heading" class="modal-title" style="font-size: 1.3rem;">Add Project</h3>
+        <button type="button" id="proj-form-close-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="admin-project-form">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem; max-height: 65vh; overflow-y: auto;">
+          <input type="hidden" id="proj-form-edit-index" value="-1">
+          <div class="form-group">
+            <label for="proj-form-title" class="form-label">Project Title *</label>
+            <input type="text" id="proj-form-title" class="form-input" placeholder="e.g. Autonomous Mobile Robot Navigation" required>
+          </div>
+          <div class="form-group">
+            <label for="proj-form-tagline" class="form-label">Tagline (One-line summary) *</label>
+            <input type="text" id="proj-form-tagline" class="form-input" placeholder="e.g. Real-time ROS 2 SLAM and obstacle avoidance." required>
+          </div>
+          <div class="form-group">
+            <label for="proj-form-category" class="form-label">Category</label>
+            <select id="proj-form-category" class="form-input">
+              <option value="robotics">Robotics & Autonomy</option>
+              <option value="ai-vision">AI & Computer Vision</option>
+              <option value="control">Control Systems</option>
+              <option value="embedded">Embedded & Hardware</option>
+            </select>
+          </div>
+          <!-- Visual Media Configuration Section -->
+          <div style="background: rgba(11, 15, 25, 0.65); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1rem; display: flex; flex-direction: column; gap: 0.85rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; color: var(--accent-cyan); letter-spacing: 0.05em; font-weight: 600;">Project Visual Media</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Card Header & Modal Presentation</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1.3fr; gap: 0.75rem;">
+              <div class="form-group" style="margin: 0;">
+                <label for="proj-form-media-type" class="form-label">Media Type</label>
+                <select id="proj-form-media-type" class="form-input">
+                  <option value="image">Image / Graphic (URL or File)</option>
+                  <option value="video">Video (YouTube / Direct URL)</option>
+                  <option value="blueprint">Cybernetic Blueprint (No Media)</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label for="proj-form-badge" class="form-label">Overlay Badge Text</label>
+                <input type="text" id="proj-form-badge" class="form-input" placeholder="e.g. AMR // NAV2">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin: 0;" id="proj-media-url-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <label for="proj-form-media-url" class="form-label" style="margin: 0;">Image / Video URL</label>
+                <label for="proj-form-media-file" class="btn-admin-action" style="cursor: pointer; padding: 0.2rem 0.65rem; font-size: 0.75rem;">
+                  📁 Browse Local File
+                </label>
+              </div>
+              <input type="text" id="proj-form-media-url" class="form-input" placeholder="Paste image URL (https://...), YouTube link, or browse local file">
+              <input type="file" id="proj-form-media-file" accept="image/*,video/*" style="display: none;">
+
+              <!-- Live Media Thumbnail Preview -->
+              <div id="proj-form-media-preview" class="admin-media-preview-box" style="display: none; margin-top: 0.65rem;">
+                <img id="proj-form-preview-thumb" src="" alt="Media Preview" class="admin-preview-thumb">
+                <div class="admin-preview-details">
+                  <span id="proj-form-preview-status" style="font-size: 0.78rem; color: var(--accent-cyan); font-family: var(--font-mono);">Media Loaded</span>
+                  <button type="button" id="proj-form-clear-media" class="btn-admin-action" style="color: #F87171; border-color: rgba(239, 68, 68, 0.3);">Remove Media</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="proj-form-desc" class="form-label">Detailed Technical Description</label>
+            <textarea id="proj-form-desc" class="form-textarea" style="min-height: 80px;" placeholder="Architecture breakdown, algorithms implemented, and hardware testbed..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="proj-form-tech" class="form-label">Tech Stack (comma-separated)</label>
+            <input type="text" id="proj-form-tech" class="form-input" placeholder="ROS 2, C++20, Nav2, Cartographer, LiDAR">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="proj-form-github" class="form-label">GitHub Repository URL</label>
+              <input type="url" id="proj-form-github" class="form-input" placeholder="https://github.com/...">
+            </div>
+            <div class="form-group">
+              <label for="proj-form-demo" class="form-label">Demo Video / Live URL</label>
+              <input type="url" id="proj-form-demo" class="form-input" placeholder="https://youtube.com/...">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="proj-form-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Skill Add/Edit Sub-Modal -->
+  <div id="admin-skill-form-modal" class="modal-overlay sub-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="skill-form-heading" class="modal-title" style="font-size: 1.3rem;">Add Skill</h3>
+        <button type="button" id="skill-form-close-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="admin-skill-form">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <input type="hidden" id="skill-form-cat-idx" value="0">
+          <input type="hidden" id="skill-form-item-idx" value="-1">
+          <div class="form-group">
+            <label for="skill-form-name" class="form-label">Skill Name *</label>
+            <input type="text" id="skill-form-name" class="form-input" placeholder="e.g. MoveIt 2" required>
+          </div>
+          <div class="form-group">
+            <label for="skill-form-level" class="form-label">Competence Level</label>
+            <select id="skill-form-level" class="form-input">
+              <option value="Expert">Expert</option>
+              <option value="Advanced" selected>Advanced</option>
+              <option value="Proficient">Proficient</option>
+              <option value="Familiar">Familiar</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label for="skill-form-proficiency" class="form-label">Proficiency Percentage</label>
+              <span id="skill-form-prof-val" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-cyan);">85%</span>
+            </div>
+            <input type="range" id="skill-form-proficiency" min="10" max="100" value="85" style="width: 100%; accent-color: var(--accent-cyan); cursor: pointer;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="skill-form-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Skill</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Skill Matrix / Category Add/Edit Sub-Modal -->
+  <div id="admin-category-form-modal" class="modal-overlay sub-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 id="cat-form-heading" class="modal-title" style="font-size: 1.3rem;">Add Skill Matrix Category</h3>
+        <button type="button" id="cat-form-close-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="admin-category-form">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 1.15rem;">
+          <input type="hidden" id="cat-form-edit-index" value="-1">
+          <div class="form-group">
+            <label for="cat-form-name" class="form-label">Matrix Category Name *</label>
+            <input type="text" id="cat-form-name" class="form-input" placeholder="e.g. Cloud Robotics & Fleet Operations" required>
+          </div>
+          <div class="form-group">
+            <label for="cat-form-id" class="form-label">Category Identifier (Slug)</label>
+            <input type="text" id="cat-form-id" class="form-input" placeholder="e.g. cloud-robotics (auto-generated if left empty)">
+          </div>
+          <div class="form-group">
+            <label for="cat-form-desc" class="form-label">Matrix Description</label>
+            <textarea id="cat-form-desc" class="form-textarea" style="min-height: 80px;" placeholder="Brief summary of skills, algorithms, and applications..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cat-form-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Matrix Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       SCRIPTS (Loaded in strict order: Data Config -> Background Canvas -> Admin -> App)
        ============================================================================ -->
   <script src="js/portfolio-data.js"></script>
   <script src="js/canvas-bg.js"></script>
+  <script src="js/admin.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

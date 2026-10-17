@@ -26,8 +26,6 @@ const portfolioData = {
     badge: "Embodied Intelligence & Autonomous Systems",
     subBadge: "ROS 2 // EMBODIED AI",
     location: "Pune / Bengaluru, India",
-    statusText: "Operational // Open to High-Impact Opportunities",
-    statusState: "online", // 'online' | 'busy' | 'away'
     tagline: "Architecting autonomous systems at the intersection of real-time control, embodied AI, and edge robotics.",
     shortBio: "Robotics and AI Engineer focused on developing intelligent physical systems. Specialized in autonomous navigation, real-time ROS 2 architectures, computer vision pipelines, and deep reinforcement learning for robotic perception and manipulation. Bridging rigorous mathematical control theory with high-performance embedded compute.",
     avatar: {
@@ -55,12 +53,6 @@ const portfolioData = {
         url: "mailto:harshal.sonsare@example.com",
         icon: "email",
         handle: "harshal.sonsare@example.com"
-      },
-      {
-        platform: "Google Scholar",
-        url: "https://scholar.google.com",
-        icon: "scholar",
-        handle: "Harshal Sonsare"
       }
     ],
     // High-impact telemetry stats displayed in the hero HUD
@@ -213,6 +205,12 @@ const portfolioData = {
       techStack: ["ROS 2 Humble", "C++20", "Nav2", "Cartographer", "LiDAR", "Intel RealSense", "Docker"],
       githubLink: "https://github.com/harshalsonsare",
       liveDemo: "https://youtube.com",
+      media: {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1000&q=80",
+        badge: "AMR // NAV2",
+        accentColor: "#00F0FF"
+      },
       mediaPlaceholder: {
         type: "blueprint",
         badge: "AMR // NAV2",
@@ -235,6 +233,12 @@ const portfolioData = {
       techStack: ["PyTorch", "Isaac Sim", "MoveIt 2", "Python", "TensorRT", "CUDA", "ROS 2"],
       githubLink: "https://github.com/harshalsonsare",
       liveDemo: "https://youtube.com",
+      media: {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80",
+        badge: "MANIPULATOR // RL",
+        accentColor: "#8B5CF6"
+      },
       mediaPlaceholder: {
         type: "neural",
         badge: "MANIPULATOR // RL",
@@ -257,6 +261,12 @@ const portfolioData = {
       techStack: ["Modern C++", "OpenCV", "TensorRT", "Jetson Orin", "DeepStream", "CUDA", "GStreamer"],
       githubLink: "https://github.com/harshalsonsare",
       liveDemo: "https://youtube.com",
+      media: {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80",
+        badge: "EDGE AI // 60 FPS",
+        accentColor: "#10B981"
+      },
       mediaPlaceholder: {
         type: "vision",
         badge: "EDGE AI // 60 FPS",
@@ -279,6 +289,12 @@ const portfolioData = {
       techStack: ["C++17", "Eigen3", "OSQP", "Gazebo", "State Estimation", "CANopen", "Linux RT-Preempt"],
       githubLink: "https://github.com/harshalsonsare",
       liveDemo: "https://youtube.com",
+      media: {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1000&q=80",
+        badge: "LEGGED // 500 Hz MPC",
+        accentColor: "#F59E0B"
+      },
       mediaPlaceholder: {
         type: "kinematics",
         badge: "LEGGED // 500 Hz MPC",
@@ -301,6 +317,12 @@ const portfolioData = {
       techStack: ["PX4 Autopilot", "ROS 2", "Fast-Planner", "OctoMap", "MAVROS", "Python/C++"],
       githubLink: "https://github.com/harshalsonsare",
       liveDemo: "https://youtube.com",
+      media: {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=1000&q=80",
+        badge: "MAV // OFFBOARD",
+        accentColor: "#38BDF8"
+      },
       mediaPlaceholder: {
         type: "aerial",
         badge: "MAV // OFFBOARD",
@@ -323,6 +345,12 @@ const portfolioData = {
       techStack: ["STM32", "micro-ROS", "ros2_control", "C++", "FreeRTOS", "CAN-FD", "Hardware-in-the-Loop"],
       githubLink: "https://github.com/harshalsonsare",
       liveDemo: "https://youtube.com",
+      media: {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=1000&q=80",
+        badge: "EMBEDDED // CAN-FD",
+        accentColor: "#EC4899"
+      },
       mediaPlaceholder: {
         type: "embedded",
         badge: "EMBEDDED // CAN-FD",
@@ -414,8 +442,7 @@ const portfolioData = {
     formEndpoint: "",
     directSocials: [
       { name: "LinkedIn", url: "https://linkedin.com", label: "Connect professionally" },
-      { name: "GitHub", url: "https://github.com", label: "Review source code & repositories" },
-      { name: "Google Scholar", url: "https://scholar.google.com", label: "Review publications & research" }
+      { name: "GitHub", url: "https://github.com", label: "Review source code & repositories" }
     ],
     quickNotice: "Available for full-time engineering roles, high-impact robotics consulting, and embodied AI collaborations."
   }
