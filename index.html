@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Robotics & Artificial Intelligence Engineer Portfolio">
+  <meta name="keywords" content="Robotics Engineer, Artificial Intelligence, ROS 2, SLAM, Autonomous Navigation, Computer Vision, Embedded Systems">
+  <meta name="author" content="Engineering Portfolio">
+  <meta name="theme-color" content="#0B0F19">
+
+  <!-- Open Graph / Social Sharing (Dynamically updated by app.js) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Robotics & AI Engineer Portfolio">
+  <meta property="og:description" content="Autonomous Systems, Real-Time Control & Embodied AI">
+
+  <title>Robotics & AI Engineer Portfolio</title>
+
+  <!-- High-Tech Design System Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Interactive Neural / Kinematic Particle Canvas -->
+  <canvas id="neuro-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============================================================================
+       SITE HEADER & NAVIGATION
+       ============================================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container nav-container">
+      <a href="#hero" id="nav-logo-link" class="nav-logo" aria-label="Home">
+        <span class="logo-badge" id="nav-logo-badge">--</span>
+        <div class="logo-meta">
+          <span class="logo-name" id="nav-logo-name">Initializing...</span>
+          <span class="logo-title" id="nav-logo-title">Robotics & AI</span>
+        </div>
+      </a>
+
+      <!-- Telemetry Status Beacon -->
+      <div class="status-beacon" role="status" aria-live="polite">
+        <span class="beacon-dot"></span>
+        <span id="nav-status-text">INITIALIZING</span>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Main Navigation">
+        <a href="#hero" class="nav-link active">Telemetry</a>
+        <a href="#about" class="nav-link">Overview</a>
+        <a href="#skills" class="nav-link">Competencies</a>
+        <a href="#projects" class="nav-link">Showcase</a>
+        <a href="#experience" class="nav-link">Timeline</a>
+        <a href="#contact" class="nav-link">Comm Link</a>
+      </nav>
+
+      <!-- Nav CTA & Mobile Menu Toggle -->
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-primary btn-nav">Get In Touch</a>
+        <button type="button" id="mobile-toggle-btn" class="mobile-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="nav-menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================================
+       MAIN CONTENT CONTAINER
+       ============================================================================ -->
+  <main id="main-content">
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero" aria-labelledby="hero-name-target">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge-wrap">
+            <span class="hero-pill" id="hero-badge-text">INITIALIZING</span>
+            <span class="hero-pill" id="hero-subbadge-text" style="border-color: rgba(16, 185, 129, 0.4); color: var(--accent-emerald);">ONLINE</span>
+          </div>
+
+          <h1 class="hero-title" id="hero-name-target">
+            <!-- Dynamically populated from portfolioData -->
+          </h1>
+
+          <div class="hero-role" id="hero-role-target">
+            <!-- Dynamically populated from portfolioData -->
+          </div>
+
+          <p class="hero-description" id="hero-desc-target">
+            <!-- Dynamically populated from portfolioData -->
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">
+              <span>View Projects</span>
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>Initialize Contact</span>
+            </a>
+          </div>
+
+          <!-- Hero Social Icons -->
+          <div class="hero-socials" id="hero-socials-target" aria-label="Social and professional links">
+            <!-- Dynamically populated from portfolioData -->
+          </div>
+        </div>
+
+        <!-- Hero HUD / Telemetry Card -->
+        <div class="hero-hud-card" role="region" aria-label="Real-time Engineering Telemetry">
+          <div class="hud-header">
+            <div class="hud-title">
+              <span class="hud-title-dot"></span>
+              <span>ENGINEERING HUD // TELEMETRY</span>
+            </div>
+            <span class="hud-status-badge">ACTIVE</span>
+          </div>
+
+          <div class="telemetry-grid" id="telemetry-stats-target">
+            <!-- Dynamically populated from portfolioData -->
+          </div>
+
+          <!-- Telemetry Waveform -->
+          <div class="hud-diagram">
+            <div class="hud-diagram-info">
+              <span class="hud-diagram-label">PRIMARY ARCHITECTURE</span>
+              <span class="hud-diagram-val" id="hud-arch-target">Loading...</span>
+            </div>
+            <div class="hud-diagram-info" style="text-align: right;">
+              <span class="hud-diagram-label">SYSTEM CLOCK</span>
+              <span class="hud-diagram-val" id="hud-clock-target">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT & ENGINEERING OVERVIEW -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">System Architecture</span>
+          <h2 id="about-title" class="section-title">Engineering Philosophy</h2>
+          <p class="section-subtitle">Bridging algorithmic intelligence with deterministic physical hardware.</p>
+        </div>
+
+        <div class="about-card">
+          <p class="about-bio" id="about-bio-target">
+            <!-- Dynamically populated from portfolioData -->
+          </p>
+
+          <div class="about-pillars" id="about-pillars-target">
+            <!-- Dynamically populated from portfolioData -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TECHNICAL SKILL MATRIX -->
+    <section id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Core Competencies</span>
+          <h2 id="skills-title" class="section-title">Technical Skill Matrix</h2>
+          <p class="section-subtitle">Categorized proficiency across robotics middleware, machine learning, and embedded hardware.</p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="skill-filter-tabs" id="skill-tabs-target" role="tablist" aria-label="Skill Categories">
+          <!-- Dynamically populated from portfolioData -->
+        </div>
+
+        <!-- Skills Grid Container -->
+        <div class="skills-container" id="skills-grid-target">
+          <!-- Dynamically populated from portfolioData -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROJECT SHOWCASE -->
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Engineering Artifacts</span>
+          <h2 id="projects-title" class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">Production-grade robotics stacks, embodied AI models, and real-time control algorithms.</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="project-filters" id="project-filters-target" role="tablist" aria-label="Project Categories">
+          <!-- Dynamically populated from portfolioData -->
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projects-grid-target">
+          <!-- Dynamically populated from portfolioData -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. EXPERIENCE & TIMELINE -->
+    <section id="experience" aria-labelledby="experience-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Career Progression</span>
+          <h2 id="experience-title" class="section-title">Experience & Milestones</h2>
+          <p class="section-subtitle">Chronological record of engineering roles, applied research, and technical accomplishments.</p>
+        </div>
+
+        <div class="timeline-container" id="experience-timeline-target">
+          <!-- Dynamically populated from portfolioData -->
+        </div>
+
+        <!-- Education Credentials -->
+        <div class="education-section-wrap">
+          <div class="section-header" style="margin-bottom: 2.5rem;">
+            <span class="section-tag">Academic Background</span>
+            <h3 class="section-title" style="font-size: 2rem;">Education & Credentials</h3>
+          </div>
+          <div class="timeline-container" id="education-timeline-target">
+            <!-- Dynamically populated from portfolioData -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CONTACT SECTION -->
+    <section id="contact" aria-labelledby="contact-heading-target">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Encrypted Telemetry</span>
+          <h2 class="section-title">Connect & Collaborate</h2>
+          <p class="section-subtitle">Initiate contact for robotics engineering roles, technical advisory, or embodied AI ventures.</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Info Card -->
+          <div class="contact-info-card">
+            <h3 class="contact-card-title" id="contact-heading-target">Loading...</h3>
+            <p class="contact-card-desc" id="contact-subheading-target">Loading...</p>
+
+            <div class="contact-details-list">
+              <div class="contact-detail-item">
+                <div class="contact-detail-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <div class="contact-detail-meta">
+                  <span class="contact-detail-label">Direct Communication</span>
+                  <div style="display: flex; align-items: center;">
+                    <span class="contact-detail-val" id="contact-email-target">--</span>
+                    <button type="button" id="copy-email-btn" class="copy-email-btn" title="Copy email address" aria-label="Copy email">Copy</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-detail-item">
+                <div class="contact-detail-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div class="contact-detail-meta">
+                  <span class="contact-detail-label">Operating Location</span>
+                  <span class="contact-detail-val" id="contact-location-target">--</span>
+                </div>
+              </div>
+
+              <div class="contact-detail-item">
+                <div class="contact-detail-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div class="contact-detail-meta">
+                  <span class="contact-detail-label">Timezone & Availability</span>
+                  <span class="contact-detail-val" id="contact-timezone-target">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Social Links -->
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;" id="contact-socials-target">
+              <!-- Dynamically populated from portfolioData -->
+            </div>
+          </div>
+
+          <!-- Contact Message Form -->
+          <div class="contact-form-card">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Transmit Message</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Send a direct dispatch to initialize technical collaboration.</p>
+
+            <div id="form-feedback" class="form-feedback" role="alert"></div>
+
+            <form id="contact-form" novalidate>
+              <div class="form-group">
+                <label for="form-name" class="form-label">Full Name *</label>
+                <input type="text" id="form-name" name="name" class="form-input" placeholder="e.g. Dr. Alex Vance" required>
+              </div>
+
+              <div class="form-group">
+                <label for="form-email" class="form-label">Email Address *</label>
+                <input type="email" id="form-email" name="email" class="form-input" placeholder="alex@robotics-lab.org" required>
+              </div>
+
+              <div class="form-group">
+                <label for="form-subject" class="form-label">Subject / System Query</label>
+                <input type="text" id="form-subject" name="subject" class="form-input" placeholder="Autonomous Navigation / Role Inquiry">
+              </div>
+
+              <div class="form-group">
+                <label for="form-message" class="form-label">Telemetry Message *</label>
+                <textarea id="form-message" name="message" class="form-textarea" placeholder="Detail your project specifications, autonomous requirements, or collaboration scope..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <span>Transmit Message</span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================================
+       PROJECT DETAILS MODAL (ACCESSIBLE DIALOG)
+       ============================================================================ -->
+  <div id="project-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title-target" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-category" id="modal-category-target">CATEGORY</div>
+          <h2 class="modal-title" id="modal-title-target">Project Title</h2>
+        </div>
+        <button type="button" id="modal-close-btn" class="modal-close-btn" aria-label="Close project modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h3 class="modal-desc-heading">Technical Overview</h3>
+        <p class="modal-description" id="modal-desc-target"></p>
+
+        <h3 class="modal-desc-heading">Key Technical Accomplishments</h3>
+        <ul class="modal-highlights-list" id="modal-highlights-target"></ul>
+
+        <h3 class="modal-desc-heading">Technologies Deployed</h3>
+        <div class="project-tech-stack" id="modal-tech-target" style="margin-bottom: 1.5rem;"></div>
+      </div>
+
+      <div class="modal-footer" id="modal-links-target">
+        <!-- Dynamically rendered repository and demo buttons -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================================
+       SITE FOOTER
+       ============================================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <span style="font-weight: 700; font-family: var(--font-heading); color: #fff;">
+          <span id="footer-name-target">--</span> // Robotics & AI
+        </span>
+        <p class="footer-copy">© <span id="footer-year-target">2026</span> All systems operational. Designed for high-impact embodied robotics.</p>
+      </div>
+
+      <div class="footer-telemetry">
+        <span>STATUS: 200 OK • DDS NODE: ONLINE</span>
+      </div>
+
+      <button type="button" id="back-to-top-btn" class="back-to-top" aria-label="Back to top" title="Scroll back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ============================================================================
+       SCRIPTS (Loaded in strict order: Data Config -> Background Canvas -> App Logic)
+       ============================================================================ -->
+  <script src="js/portfolio-data.js"></script>
+  <script src="js/canvas-bg.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
